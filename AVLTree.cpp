@@ -1,5 +1,4 @@
 #include "AVLTree.h"
-
 #include <string>
 
 size_t AVLTree::AVLNode::numChildren() const {
@@ -7,6 +6,9 @@ size_t AVLTree::AVLNode::numChildren() const {
 }
 
 bool AVLTree::AVLNode::isLeaf() const {
+    if (this->left == nullptr && this->right == nullptr) {
+        return true;
+    }
     return false;
 }
 
