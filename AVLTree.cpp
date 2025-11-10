@@ -2,13 +2,28 @@
 #include <string>
 
 size_t AVLTree::AVLNode::numChildren() const {
-    return 0;
+    // If the node has only one child (the left one)
+    if (this->right != nullptr && this->left == nullptr) {
+        return 1;
+    }
+    // If the node has only one child (the right one)
+    if (this->right == nullptr && this->left != nullptr) {
+        return 1;
+    }
+    // If the node is a leaf it has no children
+    if (isLeaf()) {
+        return 0;
+    }
+    // Must have both children
+    return 2;
 }
 
 bool AVLTree::AVLNode::isLeaf() const {
+    // If the node has no children it is a leaf
     if (this->left == nullptr && this->right == nullptr) {
         return true;
     }
+    // If it has a child it's not
     return false;
 }
 
@@ -35,7 +50,7 @@ bool AVLTree::removeNode(AVLNode*& current){
         }
     } else {
         // case 3 - we have two children,
-        // get smallest key in right subtree by
+        // get the smallest key in right subtree by
         // getting right child and go left until left is null
         AVLNode* smallestInRight = current->right;
         // I could check if smallestInRight is null,
@@ -65,4 +80,5 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
 }
 
 void AVLTree::balanceNode(AVLNode *&node) {
+
 }
