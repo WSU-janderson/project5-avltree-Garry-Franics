@@ -1,13 +1,17 @@
 #include "AVLTree.h"
 #include <string>
+#include <optional>
+#include <vector>
+
+using namespace std;
 
 size_t AVLTree::AVLNode::numChildren() const {
     // If the node has only one child (the left one)
-    if (this->right != nullptr && this->left == nullptr) {
+    if (right != nullptr && left == nullptr) {
         return 1;
     }
     // If the node has only one child (the right one)
-    if (this->right == nullptr && this->left != nullptr) {
+    if (right == nullptr && left != nullptr) {
         return 1;
     }
     // If the node is a leaf it has no children
@@ -20,7 +24,7 @@ size_t AVLTree::AVLNode::numChildren() const {
 
 bool AVLTree::AVLNode::isLeaf() const {
     // If the node has no children it is a leaf
-    if (this->left == nullptr && this->right == nullptr) {
+    if (left == nullptr && right == nullptr) {
         return true;
     }
     // If it has a child it's not
@@ -28,14 +32,14 @@ bool AVLTree::AVLNode::isLeaf() const {
 }
 
 size_t AVLTree::AVLNode::getHeight() const {
-    return 0;
+    // Returns the height
+    return height;
 }
 
 bool AVLTree::removeNode(AVLNode*& current){
     if (!current) {
         return false;
     }
-
     AVLNode* toDelete = current;
     auto nChildren = current->numChildren();
     if (current->isLeaf()) {
@@ -75,7 +79,7 @@ bool AVLTree::removeNode(AVLNode*& current){
     return true;
 }
 
-bool AVLTree::remove(AVLNode *&current, KeyType key) {
+bool AVLTree::remove(AVLNode *&current, string key) {
     return false;
 }
 
