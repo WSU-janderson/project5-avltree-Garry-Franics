@@ -5,6 +5,25 @@
 
 using namespace std;
 
+AVLTree::AVLTree() {
+    balance = 0;
+    num = 0;
+    root = nullptr;
+}
+
+bool AVLTree::insert(const string& key, const size_t value) {
+    AVLNode *newNode = new AVLNode (key, value);
+
+}
+
+AVLTree::AVLNode::AVLNode(const string& key, size_t value) {
+    this->key = key;
+    this->value = value;
+    height = 0;
+    left = nullptr;
+    right = nullptr;
+}
+
 size_t AVLTree::AVLNode::numChildren() const {
     // If the node has only one child (the left one)
     if (right != nullptr && left == nullptr) {
