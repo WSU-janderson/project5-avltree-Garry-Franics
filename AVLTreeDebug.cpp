@@ -12,6 +12,9 @@ using namespace std;
 
 
 int main() {
+    AVLTree avlTree;
+    avlTree.insert("broken", 45);
+    avlTree.insert("working", 42);
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');

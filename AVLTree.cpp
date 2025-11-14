@@ -11,9 +11,27 @@ AVLTree::AVLTree() {
     root = nullptr;
 }
 
-bool AVLTree::insert(const string& key, const size_t value) {
-    AVLNode *newNode = new AVLNode (key, value);
+AVLTree::~AVLTree() = default;
 
+bool AVLTree::insert(const string& key, const size_t value) {
+    return insert(root, key, value);
+}
+bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) {
+    if (current == nullptr) {
+        current = new AVLNode (key, value);
+        return true;
+    }
+    if (current->key == key) {
+        return false;
+    }
+    bool inserted = false;
+    if (key < current->key) {
+        inserted = insert(current->left, key, value);
+    }
+    else if (key > current->key) {
+        inserted = insert(current->right, key, value);
+    }
+    return inserted;
 }
 
 AVLTree::AVLNode::AVLNode(const string& key, size_t value) {

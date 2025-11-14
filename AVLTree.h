@@ -55,7 +55,8 @@ protected:
     };
 
     public:
-        //void recursiveBracket(AVLNode*& current);
+        AVLNode recursiveBracket(AVLNode*& current);
+        AVLNode deconstructor(AVLNode*& current);
 
     private:
         AVLNode* root;
@@ -67,7 +68,7 @@ protected:
         vector<string> keys(AVLNode*& current) const;
         AVLTree(AVLNode*& current, AVLTree& other);
         void copyEquals(AVLNode& current, AVLNode& other);
-        //~AVLTree(AVLNode*& current);
+
 
         /* Helper methods for remove */
         // this overloaded remove will do the recursion to remove the node
