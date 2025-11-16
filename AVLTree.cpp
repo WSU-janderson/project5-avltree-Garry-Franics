@@ -34,6 +34,26 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
     return inserted;
 }
 
+bool AVLTree::contains(const string& key) {
+    return contains(root, key);
+}
+bool AVLTree::contains(AVLNode*& current, const string& key) {
+    if (current == nullptr) {
+        return false;
+    }
+    if (current->key == key) {
+        return true;
+    }
+    bool contained = false;
+    if (key < current->key) {
+        contained = contains(current->left, key);
+    }
+    else if (key > current->key) {
+        contained = contains(current->right, key);
+    }
+    return contained;
+}
+
 AVLTree::AVLNode::AVLNode(const string& key, size_t value) {
     this->key = key;
     this->value = value;

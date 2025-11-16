@@ -15,6 +15,12 @@ int main() {
     AVLTree avlTree;
     avlTree.insert("broken", 45);
     avlTree.insert("working", 42);
+    avlTree.insert("tree", 4);
+    avlTree.insert("AVL", 2);
+    avlTree.insert("insert", 1);
+    avlTree.insert("contains", 2);
+    bool guh = avlTree.contains("not");
+    cout << guh << endl;
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');
