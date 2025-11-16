@@ -19,8 +19,8 @@ int main() {
     avlTree.insert("AVL", 2);
     avlTree.insert("insert", 1);
     avlTree.insert("contains", 2);
-    bool guh = avlTree.contains("not");
-    cout << guh << endl;
+    optional<size_t> foo = avlTree.get("conference");
+    avlTree.insert("contains", 2);
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');

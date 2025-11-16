@@ -21,7 +21,7 @@ public:
     bool insert(const string& key, size_t value);
     bool remove(const string& key);
     bool contains(const string& key);
-    optional<size_t> get(const string& key) const;
+    optional<size_t> get(const string& key);
     size_t& operator[](const string& key);
     vector<string> findRange(const string& lowKey, const string& highKey) const;
     vector<string> keys() const;
@@ -63,7 +63,7 @@ protected:
 
         static bool insert(AVLNode*& current, const string& key, const size_t& value);
         static bool contains(AVLNode*& current, const string &key);
-        optional<size_t> get(AVLNode*& current, const string& key) const;
+        static optional<size_t> get(AVLNode*& current, const string& key);
         vector<string> findRange(AVLNode*& current, const string& lowKey, const string& highKey) const;
         vector<string> keys(AVLNode*& current) const;
         AVLTree(AVLNode*& current, AVLTree& other);
