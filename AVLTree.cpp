@@ -19,6 +19,7 @@ bool AVLTree::insert(const string& key, const size_t value) {
 bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) {
     if (current == nullptr) {
         current = new AVLNode (key, value);
+        num++;
         return true;
     }
     if (contains(current, key)) {
@@ -75,6 +76,27 @@ optional<size_t> AVLTree::get(AVLNode*& current, const string& key) {
     return gotten;
 }
 
+size_t& AVLTree::operator[](const string& key) {
+    AVLNode *filler = recursiveBracket(root, key);
+    size_t& filler2 = filler->value;
+    return filler2;
+}
+AVLTree::AVLNode* AVLTree::recursiveBracket(AVLNode*& current, const string& key) {
+    if (current == nullptr) {
+        return nullptr;
+    }
+    if (current->key == key) {
+        return current;
+    }
+    if (key < current->key) {
+        return recursiveBracket(current->left, key);
+    }
+    if (key > current->key) {
+        return recursiveBracket(current->right, key);
+    }
+    return current;
+}
+
 AVLTree::AVLNode::AVLNode(const string& key, size_t value) {
     this->key = key;
     this->value = value;
@@ -114,6 +136,9 @@ size_t AVLTree::AVLNode::getHeight() const {
     return height;
 }
 
+bool AVLTree::remove(const string& key) {
+    return remove(root, key);
+}
 bool AVLTree::removeNode(AVLNode*& current){
     if (!current) {
         return false;
@@ -140,8 +165,8 @@ bool AVLTree::removeNode(AVLNode*& current){
         while (smallestInRight->left) {
             smallestInRight = smallestInRight->left;
         }
-        std::string newKey = smallestInRight->key;
-        int newValue = smallestInRight->value;
+        string newKey = smallestInRight->key;
+        size_t newValue = smallestInRight->value;
         remove(root, smallestInRight->key); // delete this one
 
         current->key = newKey;
@@ -153,12 +178,23 @@ bool AVLTree::removeNode(AVLNode*& current){
         return true; // we already deleted the one we needed to so return
     }
     delete toDelete;
-
+    num--;
     return true;
 }
-
-bool AVLTree::remove(AVLNode *&current, string key) {
-    return false;
+bool AVLTree::remove(AVLNode *&current, const string& key) {
+    if (current == nullptr) {
+        return false;
+    }
+    if (current->key == key) {
+        return removeNode(current);
+    }
+    if (key < current->key) {
+        return remove(current->left, key);
+    }
+    if (key > current->key) {
+        return remove(current->right, key);
+    }
+    return true;
 }
 
 void AVLTree::balanceNode(AVLNode *&node) {

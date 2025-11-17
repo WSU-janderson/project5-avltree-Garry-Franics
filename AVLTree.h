@@ -55,15 +55,15 @@ protected:
     };
 
     public:
-        AVLNode recursiveBracket(AVLNode*& current);
+        AVLNode* recursiveBracket(AVLNode*& current, const string& key);
         AVLNode deconstructor(AVLNode*& current);
 
     private:
         AVLNode* root;
 
-        static bool insert(AVLNode*& current, const string& key, const size_t& value);
-        static bool contains(AVLNode*& current, const string &key);
-        static optional<size_t> get(AVLNode*& current, const string& key);
+        bool insert(AVLNode*& current, const string& key, const size_t& value);
+        bool contains(AVLNode*& current, const string &key);
+        optional<size_t> get(AVLNode*& current, const string& key);
         vector<string> findRange(AVLNode*& current, const string& lowKey, const string& highKey) const;
         vector<string> keys(AVLNode*& current) const;
         AVLTree(AVLNode*& current, AVLTree& other);
@@ -72,7 +72,7 @@ protected:
 
         /* Helper methods for remove */
         // this overloaded remove will do the recursion to remove the node
-        bool remove(AVLNode*& current, string key);
+        bool remove(AVLNode*& current, const string& key);
         // removeNode contains the logic for actually removing a node based on the number of children
         bool removeNode(AVLNode*& current);
         // You will implement this, but it is needed for removeNode()

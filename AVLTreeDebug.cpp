@@ -19,8 +19,7 @@ int main() {
     avlTree.insert("AVL", 2);
     avlTree.insert("insert", 1);
     avlTree.insert("contains", 2);
-    optional<size_t> foo = avlTree.get("conference");
-    avlTree.insert("contains", 2);
+    avlTree.remove("tree");
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');
