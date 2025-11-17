@@ -19,8 +19,16 @@ int main() {
     avlTree.insert("AVL", 2);
     avlTree.insert("insert", 1);
     avlTree.insert("contains", 2);
-    size_t foo = avlTree.size();
-    cout << foo << endl;
+    vector<string> keys = avlTree.keys();
+    for (int i = 0; i < keys.size(); i++) {
+        cout << keys[i] << endl;
+    }
+    cout << endl;
+    keys.clear();
+    keys = avlTree.findRange("tree", "contains");
+    for (int i = 0; i < keys.size(); i++) {
+        cout << keys[i] << endl;
+    }
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');

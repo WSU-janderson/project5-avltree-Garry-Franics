@@ -76,6 +76,36 @@ optional<size_t> AVLTree::get(AVLNode*& current, const string& key) {
     return gotten;
 }
 
+vector<string> AVLTree::findRange(const string& lowKey, const string& highKey) {
+    range.clear();
+    findRange(root, lowKey, highKey);
+    return range;
+}
+void AVLTree::findRange(AVLNode*& current, const string& lowKey, const string& highKey) {
+    if (current == nullptr) {
+        return;
+    }
+    if (current->key <= lowKey && current->key >= highKey) {
+        range.push_back(current->key);
+    }
+    findRange(current->left, lowKey, highKey);
+    findRange(current->right, lowKey, highKey);
+}
+
+vector<string> AVLTree::keys() {
+    range.clear();
+    keys(root);
+    return range;
+}
+void AVLTree::keys(AVLNode*& current) {
+    if (current == nullptr) {
+        return;
+    }
+    range.push_back(current->key);
+    keys(current->left);
+    keys(current->right);
+}
+
 size_t AVLTree::size() const {
     return num;
 }
@@ -147,7 +177,7 @@ size_t AVLTree::AVLNode::getHeight() const {
 bool AVLTree::remove(const string& key) {
     return remove(root, key);
 }
-bool AVLTree::removeNode(AVLNode*& current){
+bool AVLTree::removeNode(AVLNode*& current) {
     if (!current) {
         return false;
     }

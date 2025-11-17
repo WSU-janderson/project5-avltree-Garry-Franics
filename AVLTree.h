@@ -13,6 +13,7 @@ using namespace std;
 class AVLTree {
 public:
 
+    vector<string> range;
     size_t balance;
     size_t num;
 
@@ -23,8 +24,8 @@ public:
     bool contains(const string& key);
     optional<size_t> get(const string& key);
     size_t& operator[](const string& key);
-    vector<string> findRange(const string& lowKey, const string& highKey) const;
-    vector<string> keys() const;
+    vector<string> findRange(const string& lowKey, const string& highKey);
+    vector<string> keys();
     size_t size() const;
     size_t getHeight() const;
     AVLTree(const AVLTree& other);
@@ -64,8 +65,8 @@ protected:
         bool insert(AVLNode*& current, const string& key, const size_t& value);
         bool contains(AVLNode*& current, const string &key);
         optional<size_t> get(AVLNode*& current, const string& key);
-        vector<string> findRange(AVLNode*& current, const string& lowKey, const string& highKey) const;
-        vector<string> keys(AVLNode*& current) const;
+        void findRange(AVLNode*& current, const string& lowKey, const string& highKey);
+        void keys(AVLNode*& current);
         AVLTree(AVLNode*& current, AVLTree& other);
         void copyEquals(AVLNode& current, AVLNode& other);
 
