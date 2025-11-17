@@ -19,7 +19,8 @@ int main() {
     avlTree.insert("AVL", 2);
     avlTree.insert("insert", 1);
     avlTree.insert("contains", 2);
-    avlTree.remove("tree");
+    size_t foo = avlTree.size();
+    cout << foo << endl;
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');

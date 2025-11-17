@@ -76,6 +76,10 @@ optional<size_t> AVLTree::get(AVLNode*& current, const string& key) {
     return gotten;
 }
 
+size_t AVLTree::size() const {
+    return num;
+}
+
 size_t& AVLTree::operator[](const string& key) {
     AVLNode *filler = recursiveBracket(root, key);
     size_t& filler2 = filler->value;
@@ -95,6 +99,10 @@ AVLTree::AVLNode* AVLTree::recursiveBracket(AVLNode*& current, const string& key
         return recursiveBracket(current->right, key);
     }
     return current;
+}
+
+size_t AVLTree::getHeight() const {
+    return root->height;
 }
 
 AVLTree::AVLNode::AVLNode(const string& key, size_t value) {
