@@ -57,14 +57,14 @@ protected:
 
     public:
         AVLNode* recursiveBracket(AVLNode*& current, const string& key);
-        AVLNode deconstructorRecursion(AVLNode*& current);
+        void deconstructorRecursion(AVLNode*& current);
 
     private:
         AVLNode* root;
 
         bool insert(AVLNode*& current, const string& key, const size_t& value);
-        bool contains(AVLNode*& current, const string &key);
-        optional<size_t> get(AVLNode*& current, const string& key);
+        bool contains(AVLNode*& current, const string &key) const;
+        optional<size_t> get(AVLNode*& current, const string& key) const;
         void findRange(AVLNode*& current, const string& lowKey, const string& highKey);
         void keys(AVLNode*& current);
         void copyConstructorRecursion(AVLNode*& current, const AVLNode* other);

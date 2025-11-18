@@ -20,9 +20,6 @@ int main() {
     avlTree.insert("insert", 1);
     avlTree.insert("contains", 2);
 
-    AVLTree craig = avlTree;
-    craig.remove("tree");
-    cout << "Check your debug";
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');

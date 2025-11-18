@@ -28,7 +28,21 @@ void AVLTree::copyConstructorRecursion(AVLNode*& current, const AVLNode* other) 
     copyConstructorRecursion(current->right, other->right);
 }
 
-AVLTree::~AVLTree() = default;
+AVLTree::~AVLTree() {
+    deconstructorRecursion(root);
+    root = nullptr;
+    num = 0;
+    balance = 0;
+}
+void AVLTree::deconstructorRecursion(AVLNode*& current) {
+    if (current == nullptr) {
+        return;
+    }
+    deconstructorRecursion(current->left);
+    deconstructorRecursion(current->right);
+    delete current;
+    current = nullptr;
+}
 
 bool AVLTree::insert(const string& key, const size_t value) {
     return insert(root, key, value);
@@ -55,7 +69,7 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
 bool AVLTree::contains(const string& key) {
     return contains(root, key);
 }
-bool AVLTree::contains(AVLNode*& current, const string& key) {
+bool AVLTree::contains(AVLNode*& current, const string& key) const {
     if (current == nullptr) {
         return false;
     }
@@ -75,7 +89,7 @@ bool AVLTree::contains(AVLNode*& current, const string& key) {
 optional<size_t> AVLTree::get(const string& key) {
     return get(root, key);
 }
-optional<size_t> AVLTree::get(AVLNode*& current, const string& key) {
+optional<size_t> AVLTree::get(AVLNode*& current, const string& key) const {
     optional<size_t> gotten{};
     if (!contains(current, key)) {
         return nullopt;
@@ -199,6 +213,7 @@ bool AVLTree::removeNode(AVLNode*& current) {
         return false;
     }
     AVLNode* toDelete = current;
+    auto nChildren = current->numChildren();
     if (current->isLeaf()) {
         // case 1 we can delete the node
         current = nullptr;
