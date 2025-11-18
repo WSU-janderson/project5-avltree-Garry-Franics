@@ -162,6 +162,29 @@ AVLTree::AVLNode* AVLTree::recursiveBracket(AVLNode*& current, const string& key
     return current;
 }
 
+void AVLTree::operator=(const AVLTree& other) {
+    if (this == &other) {
+        return;
+    }
+    deconstructorRecursion(this->root);
+    this->root = nullptr;
+    this->num = 0;
+    this->balance = 0;
+    this->num = other.num;
+    this->balance = other.balance;
+    copyEquals(this->root, other.root);
+}
+void AVLTree::copyEquals(AVLNode*& current, const AVLNode* other) {
+    if (!other) {
+        current = nullptr;
+        return;
+    }
+    current = new AVLNode(other->key, other->value);
+    current->height = other->height;
+    copyEquals(current->left, other->left);
+    copyEquals(current->right, other->right);
+}
+
 size_t AVLTree::getHeight() const {
     return root->height;
 }

@@ -68,7 +68,7 @@ protected:
         void findRange(AVLNode*& current, const string& lowKey, const string& highKey);
         void keys(AVLNode*& current);
         void copyConstructorRecursion(AVLNode*& current, const AVLNode* other);
-        void copyEquals(AVLNode& current, AVLNode& other);
+        void copyEquals(AVLNode*& current, const AVLNode* other);
 
 
         /* Helper methods for remove */
