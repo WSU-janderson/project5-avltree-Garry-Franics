@@ -57,7 +57,7 @@ protected:
 
     public:
         AVLNode* recursiveBracket(AVLNode*& current, const string& key);
-        AVLNode deconstructor(AVLNode*& current);
+        AVLNode deconstructorRecursion(AVLNode*& current);
 
     private:
         AVLNode* root;
@@ -67,7 +67,7 @@ protected:
         optional<size_t> get(AVLNode*& current, const string& key);
         void findRange(AVLNode*& current, const string& lowKey, const string& highKey);
         void keys(AVLNode*& current);
-        AVLTree(AVLNode*& current, AVLTree& other);
+        void copyConstructorRecursion(AVLNode*& current, const AVLNode* other);
         void copyEquals(AVLNode& current, AVLNode& other);
 
 

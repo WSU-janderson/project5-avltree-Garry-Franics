@@ -11,6 +11,23 @@ AVLTree::AVLTree() {
     root = nullptr;
 }
 
+AVLTree::AVLTree(const AVLTree& other) {
+    this->balance = other.balance;
+    this->num = other.num;
+    this->root = nullptr;
+    copyConstructorRecursion(this->root, other.root);
+}
+void AVLTree::copyConstructorRecursion(AVLNode*& current, const AVLNode* other) {
+    if (other == nullptr) {
+        current = nullptr;
+        return;
+    }
+    current = new AVLNode(other->key, other->value);
+    current->height = other->height;
+    copyConstructorRecursion(current->left, other->left);
+    copyConstructorRecursion(current->right, other->right);
+}
+
 AVLTree::~AVLTree() = default;
 
 bool AVLTree::insert(const string& key, const size_t value) {
@@ -182,7 +199,6 @@ bool AVLTree::removeNode(AVLNode*& current) {
         return false;
     }
     AVLNode* toDelete = current;
-    auto nChildren = current->numChildren();
     if (current->isLeaf()) {
         // case 1 we can delete the node
         current = nullptr;
