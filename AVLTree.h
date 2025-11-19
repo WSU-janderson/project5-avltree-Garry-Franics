@@ -1,6 +1,16 @@
-/**
- * AVLTree.h
- */
+/*-------------------------------------------------------------------------------------------
+* Name: Garry Francis
+* Project: AVLTree
+*
+* This is the header file for the AVLTree and AVLNode classes. It contains all the constructor
+* and function declarations. This file includes declarations for: the AVLTree constructor, the
+* AVLTree copy constructor, the AVLTree deconstructor, the insert function, the contains
+* function, the get function, the findRange function, the keys function, the size function,
+* the operator [], =, and << override functions, the getHeight(tree) function, the AVLNode
+* constructor, the numChildren function, the isLeaf function, the getHeight(node) function,
+* the remove function, the balanceNode function, and any recursive functions that are called
+* by functions previously listed.
+* -----------------------------------------------------------------------------------------*/
 
 #ifndef AVLTREE_H
 #define AVLTREE_H
@@ -12,13 +22,15 @@ using namespace std;
 
 class AVLTree {
 public:
-
+    //AVLTree class variables
     vector<string> range;
     size_t balance;
     size_t num;
 
+    //AVLTree constructor
     AVLTree();
 
+    //AVLTree functions
     bool insert(const string& key, size_t value);
     bool remove(const string& key);
     bool contains(const string& key);
@@ -28,24 +40,27 @@ public:
     vector<string> keys();
     size_t size() const;
     size_t getHeight() const;
-    AVLTree(const AVLTree& other);
     void operator=(const AVLTree& other);
-    ~AVLTree();
     friend ostream& operator<<(ostream& os, const AVLTree & avlTree);
+    //AVLTree copy constructor
+    AVLTree(const AVLTree& other);
+    //AVLTree deconstructor
+    ~AVLTree();
 
 protected:
     class AVLNode {
     public:
-
+        //AVLNode class variables
         string key;
         size_t value;
         size_t height;
-
         AVLNode* left;
         AVLNode* right;
 
+        //AVLNode constructor
         AVLNode(const string& key, size_t value);
 
+        //AVLNode functions
         // 0, 1 or 2
         size_t numChildren() const;
         // true or false
@@ -56,12 +71,15 @@ protected:
     };
 
     public:
+        //Recursive functions that needed to be public to work
         AVLNode* recursiveBracket(AVLNode*& current, const string& key);
         void deconstructorRecursion(AVLNode*& current);
 
     private:
+        //Private root variable of AVLTree class
         AVLNode* root;
 
+        //Recursive functions
         bool insert(AVLNode*& current, const string& key, const size_t& value);
         bool contains(AVLNode*& current, const string &key) const;
         optional<size_t> get(AVLNode*& current, const string& key) const;
