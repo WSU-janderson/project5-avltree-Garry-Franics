@@ -104,6 +104,11 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
     else if (key > current->key) {
         inserted = insert(current->right, key, value);
     }
+    current->height = calcHeight(current);
+    return inserted;
+}
+
+int AVLTree::calcHeight(AVLNode*& current) {
     //Initialize height calculators
     int lh = -1, rh = -1;
     //If left is not null set lh to that height
@@ -115,9 +120,7 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
         rh = current->right->height;
     }
     //Set current height to the bigger child height +1
-    current->height = max(lh, rh) + 1;
-    //Return
-    return inserted;
+    return max(lh, rh) + 1;
 }
 
 //Contains
@@ -419,5 +422,48 @@ bool AVLTree::remove(AVLNode *&current, const string& key) {
 
 //TODO: The monster
 void AVLTree::balanceNode(AVLNode *&node) {
+    //Initialize height calculators
+    int bf = node->getBalance();
+    if (bf == 2) {
+        int lbf = node->left->getBalance();
+        if (lbf == 1) {
+
+        }
+        else if (lbf == -1) {
+
+        }
+    }
+    else if (bf == -2) {
+        int rbf = node->right->getBalance();
+        if (rbf == 1) {
+
+        }
+        else if (rbf == -1) {
+
+        }
+    }
+}
+
+int AVLTree::AVLNode::getBalance() {
+    //Initialize height calculators
+    int lh = -1, rh = -1;
+    //If left is not null set lh to that height
+    if (left != nullptr) {
+        lh = left->height;
+    }
+    //If right is not null set rh to that height
+    if (right != nullptr) {
+        rh = right->height;
+    }
+    //Calculate balance factor
+    int bf = lh - rh;
+    return bf;
+}
+
+void AVLTree::rotateRight(AVLNode*& problem) {
+
+}
+
+void AVLTree::rotateLeft(AVLNode*& problem) {
 
 }

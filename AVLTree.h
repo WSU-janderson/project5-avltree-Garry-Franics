@@ -67,6 +67,7 @@ protected:
         bool isLeaf() const;
         // number of hops to deepest leaf node
         size_t getHeight() const;
+        int getBalance();
 
     };
 
@@ -74,6 +75,9 @@ protected:
         //Recursive functions that needed to be public to work
         AVLNode* recursiveBracket(AVLNode*& current, const string& key);
         void deconstructorRecursion(AVLNode*& current);
+        int calcHeight(AVLNode*& current);
+        void rotateRight(AVLNode*& problem);
+        void rotateLeft(AVLNode*& problem);
 
     private:
         //Private root variable of AVLTree class
