@@ -23,7 +23,7 @@ using namespace std;
 class AVLTree {
 public:
     //AVLTree class variables
-    vector<string> range;
+    //vector<string> range;
     size_t balance;
     size_t num;
 
@@ -33,11 +33,11 @@ public:
     //AVLTree functions
     bool insert(const string& key, size_t value);
     bool remove(const string& key);
-    bool contains(const string& key);
-    optional<size_t> get(const string& key);
+    bool contains(const string& key) const;
+    optional<size_t> get(const string& key) const;
     size_t& operator[](const string& key);
-    vector<string> findRange(const string& lowKey, const string& highKey);
-    vector<string> keys();
+    vector<string> findRange(const string& lowKey, const string& highKey) const;
+    vector<string> keys() const;
     size_t size() const;
     size_t getHeight() const;
     void operator=(const AVLTree& other);
@@ -81,10 +81,10 @@ protected:
 
         //Recursive functions
         bool insert(AVLNode*& current, const string& key, const size_t& value);
-        bool contains(AVLNode*& current, const string &key) const;
-        optional<size_t> get(AVLNode*& current, const string& key) const;
-        void findRange(AVLNode*& current, const string& lowKey, const string& highKey);
-        void keys(AVLNode*& current);
+        bool contains(AVLNode* current, const string &key) const;
+        optional<size_t> get(AVLNode* current, const string& key) const;
+        vector<string> findRange(AVLNode* current, const string& lowKey, const string& highKey, vector<string>& result) const;
+        vector<string> keys(AVLNode* current, vector<string>& result) const;
         void copyConstructorRecursion(AVLNode*& current, const AVLNode* other);
         void copyEquals(AVLNode*& current, const AVLNode* other);
 

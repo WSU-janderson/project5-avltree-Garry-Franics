@@ -121,11 +121,11 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
 }
 
 //Contains
-bool AVLTree::contains(const string& key) {
+bool AVLTree::contains(const string& key) const {
     //Begin recursion
     return contains(root, key);
 }
-bool AVLTree::contains(AVLNode*& current, const string& key) const {
+bool AVLTree::contains(AVLNode* current, const string& key) const {
     //If nullptr is hit the key is not in the tree
     if (current == nullptr) {
         return false;
@@ -149,11 +149,11 @@ bool AVLTree::contains(AVLNode*& current, const string& key) const {
 }
 
 //Get
-optional<size_t> AVLTree::get(const string& key) {
+optional<size_t> AVLTree::get(const string& key) const {
     //Begin recursion
     return get(root, key);
 }
-optional<size_t> AVLTree::get(AVLNode*& current, const string& key) const {
+optional<size_t> AVLTree::get(AVLNode* current, const string& key) const {
     //Make an optional size_t to return
     optional<size_t> gotten{};
     //If the key is not in the tree there is no value to return
@@ -178,49 +178,51 @@ optional<size_t> AVLTree::get(AVLNode*& current, const string& key) const {
 }
 
 //findRange
-vector<string> AVLTree::findRange(const string& lowKey, const string& highKey) {
+vector<string> AVLTree::findRange(const string& lowKey, const string& highKey) const {
     //Clear range vector for new call
-    range.clear();
+    vector<string> result;
     //Begin recursion
-    findRange(root, lowKey, highKey);
+    result = findRange(root, lowKey, highKey, result);
     //Return range
-    return range;
+    return result;
 }
-void AVLTree::findRange(AVLNode*& current, const string& lowKey, const string& highKey) {
+vector<string> AVLTree::findRange(AVLNode* current, const string& lowKey, const string& highKey, vector<string>& result) const {
     //If nullptr is hit stop
     if (current == nullptr) {
-        return;
+        return result;
     }
     //If current key is in the desired range add it to the vector
     if (current->key <= lowKey && current->key >= highKey) {
-        range.push_back(current->key);
+        result.push_back(current->key);
     }
     //Move to the left node
-    findRange(current->left, lowKey, highKey);
+    findRange(current->left, lowKey, highKey, result);
     //Move to the right node
-    findRange(current->right, lowKey, highKey);
+    findRange(current->right, lowKey, highKey, result);
+    return result;
 }
 
 //Keys
-vector<string> AVLTree::keys() {
+vector<string> AVLTree::keys() const {
     //Clear range vector for new call
-    range.clear();
+    vector<string> result;
     //Begin recursion
-    keys(root);
+    result = keys(root, result);
     //Return range
-    return range;
+    return result;
 }
-void AVLTree::keys(AVLNode*& current) {
+vector<string> AVLTree::keys(AVLNode* current, vector<string>& result) const {
     //If nullptr is hit stop
     if (current == nullptr) {
-        return;
+        return result;
     }
     //Add current key to the vector
-    range.push_back(current->key);
+    result.push_back(current->key);
     //Move to the left node
-    keys(current->left);
+    keys(current->left, result);
     //Move to the right node
-    keys(current->right);
+    keys(current->right, result);
+    return result;
 }
 
 //Size
