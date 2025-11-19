@@ -87,6 +87,7 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
         current = new AVLNode (key, value);
         //Increase size tracker by 1
         num++;
+        current->height = 0;
         return true;
     }
     //If node is already in the tree do not add a duplicate
@@ -103,6 +104,18 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
     else if (key > current->key) {
         inserted = insert(current->right, key, value);
     }
+    //Initialize height calculators
+    int lh = -1, rh = -1;
+    //If left is not null set lh to that height
+    if (current->left != nullptr) {
+        lh = current->left->height;
+    }
+    //If right is not null set rh to that height
+    if (current->right != nullptr) {
+        rh = current->right->height;
+    }
+    //Set current height to the bigger child height +1
+    current->height = max(lh, rh) + 1;
     //Return
     return inserted;
 }

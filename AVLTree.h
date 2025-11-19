@@ -53,7 +53,7 @@ protected:
         //AVLNode class variables
         string key;
         size_t value;
-        size_t height;
+        int height;
         AVLNode* left;
         AVLNode* right;
 
