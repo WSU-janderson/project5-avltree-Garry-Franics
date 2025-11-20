@@ -13,13 +13,16 @@ using namespace std;
 
 int main() {
     AVLTree avlTree;
-    avlTree.insert("broken", 45);
-    avlTree.insert("working", 42);
-    avlTree.insert("tree", 4);
-    avlTree.insert("AVL", 2);
-    avlTree.insert("insert", 1);
-    avlTree.insert("contains", 2);
-    vector<string> agony = avlTree.keys();
+    avlTree.insert("a", 45);
+    avlTree.insert("b", 42);
+    avlTree.insert("c", 4);
+    avlTree.insert("d", 2);
+    avlTree.insert("e", 1);
+    avlTree.insert("f", 2);
+    avlTree.insert("g", 3);
+    avlTree.insert("h", 4);
+    avlTree.remove("d");
+    cout << "pick a god and pray" << endl;
     // AVLTree tree;
     // bool insertResult;
     // insertResult = tree.insert("F", 'F');

@@ -8,8 +8,9 @@
 * function, the get function, the findRange function, the keys function, the size function,
 * the operator [], =, and << override functions, the getHeight(tree) function, the AVLNode
 * constructor, the numChildren function, the isLeaf function, the getHeight(node) function,
-* the remove function, the balanceNode function, and any recursive functions that are called
-* by functions previously listed.
+* the remove function, the balanceNode function, the calcHeight function, the getBalance
+* function, the rotateRight function, the rotateLeft function, and any recursive functions
+* that are called by functions previously listed.
 * -----------------------------------------------------------------------------------------*/
 
 #include "AVLTree.h"
@@ -22,7 +23,6 @@ using namespace std;
 //AVLTree constructor
 AVLTree::AVLTree() {
     //Initialize class variables
-    balance = 0;
     num = 0;
     root = nullptr;
 }
@@ -30,7 +30,6 @@ AVLTree::AVLTree() {
 //AVLTree copy constructor
 AVLTree::AVLTree(const AVLTree& other) {
     //Copy over class variables
-    this->balance = other.balance;
     this->num = other.num;
     //Except root we need that null
     this->root = nullptr;
@@ -59,7 +58,6 @@ AVLTree::~AVLTree() {
     deconstructorRecursion(root);
     root = nullptr;
     num = 0;
-    balance = 0;
 }
 void AVLTree::deconstructorRecursion(AVLNode*& current) {
     //Stop if a nullptr is hit
@@ -87,6 +85,7 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
         current = new AVLNode (key, value);
         //Increase size tracker by 1
         num++;
+        //Set the height to 0
         current->height = 0;
         return true;
     }
@@ -104,7 +103,9 @@ bool AVLTree::insert(AVLNode*& current, const string& key, const size_t& value) 
     else if (key > current->key) {
         inserted = insert(current->right, key, value);
     }
-    current->height = calcHeight(current);
+    //Balance the node if needed
+    balanceNode(current);
+    //Return
     return inserted;
 }
 
@@ -276,7 +277,6 @@ void AVLTree::operator=(const AVLTree& other) {
     this->root = nullptr;
     //Copy over num and balance
     this->num = other.num;
-    this->balance = other.balance;
     //Begin recursion
     copyEquals(this->root, other.root);
 }
@@ -408,42 +408,68 @@ bool AVLTree::remove(AVLNode *&current, const string& key) {
     if (current->key == key) {
         return removeNode(current);
     }
+    bool removed;
     //If the key is less than current key move left
     if (key < current->key) {
-        return remove(current->left, key);
+        removed = remove(current->left, key);
+        if (removed == true) {
+            //Balance node if needed (probably needed)
+            balanceNode(current);
+        }
+        return removed;
     }
     //If the key is greater than current key more right
     if (key > current->key) {
-        return remove(current->right, key);
+        removed = remove(current->right, key);
+        if (removed == true) {
+            //Balance node if needed (probably needed
+            balanceNode(current);
+        }
+        return removed;
     }
     //Return
     return true;
 }
 
-//TODO: The monster
+//balanceNode
 void AVLTree::balanceNode(AVLNode *&node) {
-    //Initialize height calculators
+    //Get the node's balance factor
     int bf = node->getBalance();
+    //If node needs a right rotation
     if (bf == 2) {
+        //Get left node's balance factor
         int lbf = node->left->getBalance();
+        //Check for single or double rotation
         if (lbf == 1) {
-
+            //Single rotation
+            rotateRight(node);
         }
         else if (lbf == -1) {
-
+            //Double rotation
+            rotateLeft(node->left);
+            rotateRight(node);
         }
     }
+    //If the node needs a right rotation
     else if (bf == -2) {
+        //Get the right node's balance factor
         int rbf = node->right->getBalance();
+        //Check for single or double rotation
         if (rbf == 1) {
-
+            //Double rotation
+            rotateRight(node->right);
+            rotateLeft(node);
         }
         else if (rbf == -1) {
-
+            //Single rotation
+            rotateLeft(node);
         }
     }
+    //Correct the node's height
+    node->height = calcHeight(node);
 }
 
+//getBalance
 int AVLTree::AVLNode::getBalance() {
     //Initialize height calculators
     int lh = -1, rh = -1;
@@ -457,13 +483,44 @@ int AVLTree::AVLNode::getBalance() {
     }
     //Calculate balance factor
     int bf = lh - rh;
+    //Return balance factor
     return bf;
 }
 
+//rotateRight
 void AVLTree::rotateRight(AVLNode*& problem) {
+    //Make the hook the new subtree root
+    AVLNode* hook = problem->left;
+    //Store the subtree
+    AVLNode* temp = hook->right;
 
+    //Move the nodes around
+    hook->right = problem;
+    problem->left = temp;
+
+    //Update the heights of effected nodes
+    problem->height = calcHeight(problem);
+    hook->height = calcHeight(hook);
+
+    //Update subtree root
+    problem = hook;
 }
 
+//rotateLeft
 void AVLTree::rotateLeft(AVLNode*& problem) {
+    //Make the hook the new subtree root
+    AVLNode* hook = problem->right;
+    //Store the subtree
+    AVLNode* temp = hook->left;
 
+    //Move the nodes around
+    hook->left = problem;
+    problem->right = temp;
+
+    // Update heights of effected nodes
+    problem->height = calcHeight(problem);
+    hook->height = calcHeight(hook);
+
+    // Update subtree root
+    problem = hook;
 }

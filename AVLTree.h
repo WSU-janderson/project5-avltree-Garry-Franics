@@ -8,8 +8,9 @@
 * function, the get function, the findRange function, the keys function, the size function,
 * the operator [], =, and << override functions, the getHeight(tree) function, the AVLNode
 * constructor, the numChildren function, the isLeaf function, the getHeight(node) function,
-* the remove function, the balanceNode function, and any recursive functions that are called
-* by functions previously listed.
+* the remove function, the balanceNode function, the calcHeight function, the getBalance
+* function, the rotateRight function, the rotateLeft function, and any recursive functions
+* that are called by functions previously listed.
 * -----------------------------------------------------------------------------------------*/
 
 #ifndef AVLTREE_H
@@ -24,7 +25,6 @@ class AVLTree {
 public:
     //AVLTree class variables
     //vector<string> range;
-    size_t balance;
     size_t num;
 
     //AVLTree constructor
@@ -75,6 +75,7 @@ protected:
         //Recursive functions that needed to be public to work
         AVLNode* recursiveBracket(AVLNode*& current, const string& key);
         void deconstructorRecursion(AVLNode*& current);
+        //Not recursive functions just need to be after AVLNode
         int calcHeight(AVLNode*& current);
         void rotateRight(AVLNode*& problem);
         void rotateLeft(AVLNode*& problem);
