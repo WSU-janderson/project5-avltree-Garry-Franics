@@ -9,14 +9,15 @@
 * the operator [], =, and << override functions, the getHeight(tree) function, the AVLNode
 * constructor, the numChildren function, the isLeaf function, the getHeight(node) function,
 * the remove function, the balanceNode function, the calcHeight function, the getBalance
-* function, the rotateRight function, the rotateLeft function, and any recursive functions
-* that are called by functions previously listed.
+* function, the rotateRight function, the rotateLeft function, the printTree function,
+* and any recursive functions that are called by functions previously listed.
 * -----------------------------------------------------------------------------------------*/
 
 #include "AVLTree.h"
 #include <string>
 #include <optional>
 #include <vector>
+#include <ostream>
 
 using namespace std;
 
@@ -196,7 +197,7 @@ vector<string> AVLTree::findRange(AVLNode* current, const string& lowKey, const 
         return result;
     }
     //If current key is in the desired range add it to the vector
-    if (current->key <= lowKey && current->key >= highKey) {
+    if (current->key >= lowKey && current->key <= highKey) {
         result.push_back(current->key);
     }
     //Move to the left node
@@ -296,10 +297,29 @@ void AVLTree::copyEquals(AVLNode*& current, const AVLNode* other) {
     copyEquals(current->right, other->right);
 }
 
-//TODO: the strange one
-ostream& operator<<(ostream& os, const AVLTree & avlTree) {
-
+//operator<<
+ostream& operator<<(ostream& os, const AVLTree& avlTree) {
+    //Begin printing recursively
+    printTree(os, avlTree.root, 0);
+    //Return the ostream
+    return os;
 }
+void printTree(ostream& os, const AVLTree::AVLNode* current, int depth) {
+    //If nullptr is hit stop
+    if (current == nullptr) {
+        return;
+    }
+    //Move to the right node
+    printTree(os, current->right, depth + 1);
+    //Print out the node contents
+    for (int i = 0; i < depth * 5; i++) {
+        os << " ";
+    }
+    os << "{" << current->key << ": " << current->value << "}" << endl;
+    //Move to the left node
+    printTree(os, current->left, depth + 1);
+}
+
 
 //getHeight(tree)
 size_t AVLTree::getHeight() const {
@@ -345,7 +365,7 @@ bool AVLTree::AVLNode::isLeaf() const {
     return false;
 }
 
-//TODO: make this actually find the height
+//getHeight
 size_t AVLTree::AVLNode::getHeight() const {
     // Returns the height
     return height;
@@ -470,7 +490,7 @@ void AVLTree::balanceNode(AVLNode *&node) {
 }
 
 //getBalance
-int AVLTree::AVLNode::getBalance() {
+int AVLTree::AVLNode::getBalance() const {
     //Initialize height calculators
     int lh = -1, rh = -1;
     //If left is not null set lh to that height
@@ -493,15 +513,12 @@ void AVLTree::rotateRight(AVLNode*& problem) {
     AVLNode* hook = problem->left;
     //Store the subtree
     AVLNode* temp = hook->right;
-
     //Move the nodes around
     hook->right = problem;
     problem->left = temp;
-
     //Update the heights of effected nodes
     problem->height = calcHeight(problem);
     hook->height = calcHeight(hook);
-
     //Update subtree root
     problem = hook;
 }
@@ -512,15 +529,12 @@ void AVLTree::rotateLeft(AVLNode*& problem) {
     AVLNode* hook = problem->right;
     //Store the subtree
     AVLNode* temp = hook->left;
-
     //Move the nodes around
     hook->left = problem;
     problem->right = temp;
-
     // Update heights of effected nodes
     problem->height = calcHeight(problem);
     hook->height = calcHeight(hook);
-
     // Update subtree root
     problem = hook;
 }

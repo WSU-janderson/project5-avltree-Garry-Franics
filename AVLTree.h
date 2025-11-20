@@ -9,8 +9,8 @@
 * the operator [], =, and << override functions, the getHeight(tree) function, the AVLNode
 * constructor, the numChildren function, the isLeaf function, the getHeight(node) function,
 * the remove function, the balanceNode function, the calcHeight function, the getBalance
-* function, the rotateRight function, the rotateLeft function, and any recursive functions
-* that are called by functions previously listed.
+* function, the rotateRight function, the rotateLeft function, the printTree function,
+* and any recursive functions that are called by functions previously listed.
 * -----------------------------------------------------------------------------------------*/
 
 #ifndef AVLTREE_H
@@ -67,7 +67,7 @@ protected:
         bool isLeaf() const;
         // number of hops to deepest leaf node
         size_t getHeight() const;
-        int getBalance();
+        int getBalance() const;
 
     };
 
@@ -79,6 +79,7 @@ protected:
         int calcHeight(AVLNode*& current);
         void rotateRight(AVLNode*& problem);
         void rotateLeft(AVLNode*& problem);
+        friend void printTree(ostream &os, const AVLNode* current, int depth);
 
     private:
         //Private root variable of AVLTree class
